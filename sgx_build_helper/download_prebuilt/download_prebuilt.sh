@@ -24,6 +24,7 @@ optlibs_name=optimized_libs_2.17.tar.gz
 checksum_file_name=SHA256SUM_prebuilt_2.17.cfg
 server_url_path=https://download.01.org/intel-sgx/sgx-linux/2.17
 
+CURRENT_BASH_PATH=$(cd `dirname ${BASH_SOURCE}` && pwd)
 # unlikely to change unless opt lib structure changes
 top_dir=$(dirname "$(realpath "$0")")
 if [[ -n $OPT_LIBS_PATH && -d $OPT_LIBS_PATH ]]; then
@@ -40,11 +41,14 @@ checksum_url=$server_url_path/$checksum_file_name
 mkdir -p $out_dir && \
 rm -f $optlibs_file $checksum_file
 
-wget -O "$optlibs_file" "$optlibs_url" || \
-(echo "Fail to download file $optlibs_url"; exit 1)
+# wget -O "$optlibs_file" "$optlibs_url" || \
+# (echo "Fail to download file $optlibs_url"; exit 1)
 
-wget -O "$checksum_file" "$checksum_url" || \
-(echo "Fail to download file $checksum_url"; exit 1)
+# wget -O "$checksum_file" "$checksum_url" || \
+# (echo "Fail to download file $checksum_url"; exit 1)
+
+cp -f $CURRENT_BASH_PATH/$optlibs_name $optlibs_file
+cp -f $CURRENT_BASH_PATH/$checksum_file_name $checksum_file
 
 pushd "$out_dir"
 
